@@ -5,7 +5,7 @@ match = {}
 -- (%l+): nome da função. %((.*)%): lista de argumentos (pode ser vazio).
 match.header = "^function (%l+)%((.*)%)$"
 
-match.var    = "^var (.+)$"
+match.var    = "var (.+)$"
 
 -- Números positivos maiores que zero.
 match.size   = "[1-9][0-9]*"
@@ -26,10 +26,10 @@ match.attrop = "(.+) = (.+) ([%+%-%*/]) (.+)$"
 match.attr = "(.+) = (.+)$"
 
 -- (%l+): nome do vetor. %[(" .. match.number .. ")%]: posição de acesso (vetor).
-match.vector = "^(%l+)%[(" .. match.number .. ")%]$"
+match.vector = "(%l+)%[(" .. match.number .. ")%]"
 
 -- (.+): comparação do if.
-match.se = "^if (.+) then$"
+match.se = "if (.+) then$"
 
 -- (.+): atribuição do fi
 match.fi = "(.+) fi$"

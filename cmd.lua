@@ -80,7 +80,7 @@ function cmd.se(compare, readline)
   -- If simples?
   attr = string.match(line, Match.fi)
   return {TYPE = "IF", CMP = cmp, EXP = cmd.attr(attr)}
-  
+
 end
 
 -- Lê um comando. Um comando pode ser um attr (atribuição), if (decisão) ou funcall (chamada).
@@ -106,14 +106,6 @@ function cmd.read(readline)
   if fname then                  -- É uma funcall
     return cmd.funcall(fname, fvalues)
   end
-
-  
-
-  -- cmd = read_if(readline)
-  -- command = nil
-  -- if command then return true end
-
 end
-
 
 return cmd
