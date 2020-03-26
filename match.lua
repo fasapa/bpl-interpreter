@@ -35,6 +35,6 @@ match.se = "if (.+) then$"
 match.fi = "(.+) fi$"
 
 -- (.+): atribuicao do else
-match.senao = "(.+) else$"
+match.senao = "else"
 
 return match

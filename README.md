@@ -1,4 +1,5 @@
-# Implementação
+# Implementação (leitor)
+### Fabrício
 
 O interpretador lê o input, linha por linha, e gera uma representação intermediária, formada por
 tabelas do Lua. 
@@ -93,3 +94,14 @@ Todos os regex utilizados são armazenados no arquivo `match.lua`.
 ## Inspect
 O arquivo `inspect.lua` não partece ao projeto, ao final será removido. É utilizado para debug das
 funções, formatando as tabelas de lua em um formato legível (`inspect(table)`).
+
+# Implementação (executor)
+### Alexsander e Fabrício
+
+A parte de interpretação está no arquivo `execute.lua`. A função de entrada é a `interpret`, ela busca pela 
+função `main`, inicia a tabela de símbolos e executa o corpo da função. A lista de comandos é interpretado pela
+função `exec_cmds`, a função busca pelo tipo de comando e despacha para rotina apropriada: `exec_attr_simple` para
+atribuições "simples" (sem operação binária), `exec_attr_op` para atribuições que contenham operações binárias,
+`exec_if` para comandos que contenham if e `funcall` para chamadas de funções.
+
+

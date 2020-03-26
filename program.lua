@@ -1,7 +1,6 @@
 -- Lê um programa
 -- Um programa é formado por uma lista de funções
 Func = require("func")
-Ins  = require("inspect")
 
 program = {}
 

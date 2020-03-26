@@ -1,7 +1,5 @@
 vardef = {}
 
-inspect = require("inspect")
-
 -- Retorna uma variável. Se size != nil retorna um vetor
 function vardef.new(name, size)
   if size then

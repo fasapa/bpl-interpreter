@@ -3,9 +3,6 @@ Match  = require("match")
 Vardef = require("vardef")
 Cmd    = require("cmd")
 
--- Inspeciona estrutura de dados
-ins = require("inspect")
-
 func = {}
 
 -- Lê header da função. Retorna nome e lista de argumentos. Se lista de argumentos for vazia
@@ -27,7 +24,7 @@ end
 local function read_vars(readline)
   local vars = {}
   -- Inclui variável padrão ret
-  table.insert(vars, Vardef.new("ret")) -- TODO: VERIFICAR SE ALGUMA VARIÁVEL ABAIXO É IGUAL A RET!!!!!
+  table.insert(vars, Vardef.new("ret"))
 
   local line = readline()
 
@@ -74,7 +71,7 @@ function func.read(readline)
   -- Função é constituida de 4 partes: nome, argumentos, variáveis e comandos.
   -- Lê header da função (nome e lista de argumentos)
   local NAME, ARGS = read_header(line)
-
+  
   -- Lê lista de variáveis. Sempre haverá a veriável de retorno padrão ret.
   local VARS = read_vars(readline)
 

@@ -2,8 +2,6 @@ Match  = require("match")
 Values = require("values")
 Extra  = require("extra")
 
-ins = require("inspect")
-
 cmd = {}
 
 -- Lê uma chamda de função. Retorna nome e lista de argumentos. Se não for funcall retorna nil.
@@ -27,7 +25,15 @@ local function attrsimples(var, arg)
   -- var e arg tem estruturas parecidas. Entretanto var não aceita números. Mas supondo que os programas
   -- nunca teram erros gramaticais podemos utilizar Values.read para ler var também, pois var nunca
   -- será um número.
-  return {TYPE = "ATTRSIMPLE", VAR = Values.read(var), ARG = Values.read(arg)}
+
+
+  -- Arg pode ser um valor ou funcall
+  local fname, fvalues = string.match(arg, Match.funcall)
+  if fname ~= nil then
+    return {TYPE = "ATTRSIMPLE", VAR = Values.read(var), ARG = cmd.funcall(fname, fvalues)}
+  else
+    return {TYPE = "ATTRSIMPLE", VAR = Values.read(var), ARG = Values.read(arg)}
+  end
 end
 
 local function attrop(var, argleft, op, argright)
@@ -62,25 +68,28 @@ end
 
 -- Lê IF. Como ocupa mais e uma linha é necessário passar a função readline para consumir as linhas restantes
 function cmd.se(compare, readline)
-  local line = readline()
+  local line = readline()       -- Lê attr IF
   local cmp = cmpread(compare)
 
-  -- IF ELSE
-  local attr = string.match(line, Match.senao)
-  if attr then
-    local exp1 = cmd.attr(attr)
+  -- Expressão corpo IF
+  local EXP1 = cmd.attr(line)
 
-    -- Lê segunda expressão
+  -- Else?
+  line = readline()
+  if string.match(line, Match.senao) then
+
+    -- Lê segunda expressão IF
     line = readline()
-    local exp2 = cmd.attr(string.match(line, Match.fi))
+    local EXP2 = cmd.attr(line)
 
-    return {TYPE = "IFLESE", CMP = cmp, EXP1 = exp1, EXP2 = exp2}
+    -- Lê fi
+    line = readline()
+    return {TYPE = "IFLESE", CMP = cmp, EXP1 = EXP1, EXP2 = EXP2}
   end
 
-  -- If simples?
-  attr = string.match(line, Match.fi)
-  return {TYPE = "IF", CMP = cmp, EXP = cmd.attr(attr)}
-
+  -- IF simples, le fi
+  line = readline()
+  return {TYPE = "IF", CMP = cmp, EXP = EXP1}
 end
 
 -- Lê um comando. Um comando pode ser um attr (atribuição), if (decisão) ou funcall (chamada).
